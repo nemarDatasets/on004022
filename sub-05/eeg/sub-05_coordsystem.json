@@ -1,0 +1,5 @@
+{
+  "EEGCoordinateSystem": "Other",
+  "EEGCoordinateUnits": "m",
+  "EEGCoordinateSystemDescription": "Coordinate system not documented in the source dataset; defaults applied during NEMAR rehost. Electrode positions in the paired electrodes.tsv were preserved unchanged from the source dataset."
+}
