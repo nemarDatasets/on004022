@@ -1,9 +1,9 @@
 {
   "version": "2.0",
-  "dataset_id": "on004022",
-  "source": "openneuro",
-  "source_id": "ds004022",
+  "pipeline_stage": "validated",
   "title": "Multimodal EEG and fNIRS Biosignal Acquisition during Motor Imagery Tasks in Patients with Orthopedic Impairment",
+  "license": "CC0",
+  "dataset_type": "raw",
   "authors": {
     "Seho Lee": {},
     "Hee Ra Jung": {},
@@ -12,14 +12,61 @@
     "Hakseung Kim": {},
     "Dong-Joo Kim": {}
   },
-  "license": "CC0",
-  "dataset_type": "raw",
   "related_identifiers": [
     {
       "identifier": "10.18112/openneuro.ds004022.v1.0.0",
       "identifier_type": "DOI",
-      "relation_type": "IsIdenticalTo"
+      "relation_type": "IsDerivedFrom"
+    },
+    {
+      "identifier": "https://github.com/nemarDatasets/on004022",
+      "identifier_type": "URL",
+      "relation_type": "IsDescribedBy"
+    },
+    {
+      "identifier": "https://nemar.org/dataexplorer/detail?dataset_id=on004022",
+      "identifier_type": "URL",
+      "relation_type": "IsDescribedBy"
     }
   ],
-  "pipeline_stage": "seeded"
+  "resource_type_general": "Dataset",
+  "modalities": [
+    "eeg"
+  ],
+  "resource_type_specific": "EEG Dataset",
+  "sizes": [
+    "665.7 MB (64 files)"
+  ],
+  "formats": [
+    ".fdt",
+    ".json",
+    ".mat",
+    ".md",
+    ".set",
+    ".tsv",
+    ".yml"
+  ],
+  "description": "This dataset comprises simultaneous 18-channel EEG and functional near-infrared spectroscopy (fNIRS) recordings from 7 participants with orthopedic impairment during motor imagery tasks. Participants performed four different motor imagery conditions (reach, twist, lift, grasp) across three sessions with 40 trials each, following a standardized paradigm with visual cueing and fixation periods. The multimodal biosignal acquisition provides complementary hemodynamic and electrophysiological measures of motor imagery processing in a clinical population.",
+  "methods_description": "EEG and fNIRS data were acquired simultaneously during motor imagery tasks. Each trial consisted of a 3-second fixation cross, followed by a 4-second visual cue, a 3-second ready state with gray screen, and a 5-second motor imagery execution period. Four motor imagery tasks (reach, twist, lift, grasp) were presented in random order across 40 trials per session over three sessions.",
+  "keywords": [
+    {
+      "term": "EEG"
+    },
+    {
+      "term": "fNIRS"
+    },
+    {
+      "term": "motor imagery"
+    },
+    {
+      "term": "brain-computer interfaces"
+    },
+    {
+      "term": "orthopedic impairment"
+    },
+    {
+      "term": "neuroimaging"
+    }
+  ],
+  "source_hash": "82718dd30da5fff3e627021f515abe47585ee3ac270e56fc45206ea302b9e77d"
 }
