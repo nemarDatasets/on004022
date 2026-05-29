@@ -2,23 +2,29 @@
 
 This dataset consists of raw 18-channel EEG and functional near infrareds(fNIRS) from 7 human paticipants with orthopedic Impairment during motor imagery(MI).  The participants performed a series of MI-related trials across three sessions. These sessions comprised 40 trials, of which four different MI tasks were presented in random order (e.g., Reach → Twist → Lift → Reach → Grasp → Grasp → Twist → Reach → Lift → Reach). Each trial began with 3 s of fixation cross. The monitor then displayed a 4 s visual cue, followed by 3 s of letters indicating the ready state with a gray screen to eliminate the afterimage. The participants were then instructed to perform the imaginary movement for 5 s in the given order.
 
-## NEMAR curation changes (2026-05-21)
+## NEMAR curation changes (2026-05-21, revised 2026-05-27)
 
-BIDS validator: 28 errors + 1010 warnings → 0 errors + 1023 warnings. Raw `.set`/`.fdt` (EEG) and `.mat` (fNIRS) binary payloads unchanged.
+The BIDS validator went from 28 errors + 1010 warnings to 0 errors + 1024 warnings. None of the raw `.set`/`.fdt` (EEG) or `.mat` (fNIRS) binary payloads were modified; every change is to a text sidecar or to filenames.
 
-### `dataset_description.json`
-- Bumped `BIDSVersion` `1.0.2` → `1.8.0`. Why: the previous value is below the validator's recognised-version floor.
-- Added `GeneratedBy: [{Name: "nemar-cli", Version: "0.8.8", CodeURL: "https://github.com/nemar-org/nemar-cli"}]`. Why: records the NEMAR rehost step in the dataset's provenance chain. `DatasetType: "raw"` was already present.
-- Removed three empty-string entries from `Funding` and dropped the empty `Acknowledgements`/`HowToAcknowledge` keys. Why: empty-string array elements and empty top-level string fields are non-canonical and noise to downstream readers.
+**EEG electrode tables (`sub-NNN/eeg/sub-NNN_electrodes.tsv`, 7 files, one per subject)**
+- Each subject originally had three per-recording files named `sub-NNN_task-motorimagery_run-N_electrodes.tsv`, and the three files for a given subject were byte-identical to each other. BIDS-EEG places electrode positions at the subject level rather than per recording, and the `electrodes.tsv` filename pattern does not permit `task-` or `run-` entities, so the three copies were redundant and named in a way the validator rejects. The run-1 copy was renamed to `sub-NNN_electrodes.tsv` (dropping the `task-` and `run-` entities) and the run-2 and run-3 copies were deleted. The 21 input files collapsed to 7 output files, with original cell contents preserved unchanged.
 
-### `sub-NNN/eeg/sub-NNN_electrodes.tsv` (7 files, one per subject)
-- Consolidated from 21 per-recording electrodes files. Each subject had three byte-identical per-recording `_task-motorimagery_run-N_electrodes.tsv` files; BIDS-EEG specifies electrode positions at the subject level, not per recording, so the three were redundant. Kept the run-1 copy renamed to `sub-NNN_electrodes.tsv` (no `task-` / `run-` entity); deleted the run-2 and run-3 duplicates. Why: BIDS's `electrodes.tsv` schema does not allow `run-` in the filename. Original cell contents preserved unchanged.
+**EEG coordinate-system sidecars (`sub-NNN/eeg/sub-NNN_coordsystem.json`, 7 files, one per subject)**
+- Every EEG `electrodes.tsv` was missing its required paired `coordsystem.json`. A single subject-level coordsystem file was added for each of the 7 subjects, matching the consolidated electrodes file. The source dataset does not document the electrode coordinate system upstream, so `EEGCoordinateSystem` was set to `"Other"`, `EEGCoordinateUnits` to `"m"` (the BIDS default), and `EEGCoordinateSystemDescription` was added with text explicitly noting that the coordinate system is not specified upstream and that the electrode positions in the paired `electrodes.tsv` were preserved unchanged. The `EEGCoordinateSystemDescription` field is required whenever `EEGCoordinateSystem` is `"Other"`, so it was filled in to satisfy that dependency rather than left blank.
 
-### `sub-NNN/eeg/sub-NNN_coordsystem.json` (7 files, new — one per subject)
-- Created at the subject level. Why: every EEG `electrodes.tsv` was missing a paired `coordsystem.json`, firing 21× `REQUIRED_COORDSYSTEM` errors. The source dataset does not document an electrode coordinate system, so the value is `EEGCoordinateSystem: "Other"` with an `EEGCoordinateSystemDescription` explicitly noting that the system is not specified upstream and that the electrode positions in the paired `electrodes.tsv` were preserved unchanged. `EEGCoordinateUnits: "m"` is the BIDS default. This closes the 21 `REQUIRED_COORDSYSTEM` errors and the dependent 21 `JSON_KEY_REQUIRED:EEGCoordinateSystemDescription` errors.
+**fNIRS electrode tables (`sub-NNN/fnirs/sub-NNN_electrodes.tsv`, 7 files, one per subject)**
+- The same consolidation as the EEG side: 21 per-recording files that were byte-identical within each subject were reduced to 7 subject-level files by keeping the run-1 copy under the subject-level filename and deleting the run-2 and run-3 duplicates. Original content unchanged.
 
-### `sub-NNN/fnirs/sub-NNN_electrodes.tsv` (7 files, one per subject)
-- Same consolidation as the EEG side: 21 per-recording files (byte-identical across runs) reduced to 7 subject-level files. Original content unchanged.
+**`.bidsignore`**
+- Patterns were added so that the entire fNIRS modality directory is hidden from the validator. The fNIRS data in this dataset is stored as `.mat` files, but BIDS-fNIRS expects `.snirf`, so the fNIRS files do not match any BIDS-fNIRS filename rule and the validator was emitting one "file not included in schema" error per `sub-NN/fnirs/` directory. Ignoring the directory was the mechanical choice because converting `.mat` to `.snirf` would touch binary payloads, which is outside what this curation pass does.
 
-### `.bidsignore`
-- Pattern updated from `/sub-*/fnirs/**` to `*/fnirs`, `*/fnirs/`, `*/fnirs/**`. Why: the original anchored pattern only matched files under the directory, not the directory itself, so the validator continued to emit `NOT_INCLUDED` on each `sub-NN/fnirs/` subdirectory (7 errors). The dataset's fNIRS data is stored as `.mat` files; BIDS-fNIRS expects `.snirf`, so the entire fNIRS modality is intentionally outside the validator's purview here. Ignoring the directory rather than converting the data was the mechanical choice — binary-payload conversion is outside the curation envelope.
+**Dataset description (`dataset_description.json`)**
+- Updated `BIDSVersion` from `1.0.2` to `1.11.1` (the version the current validator checks against).
+- `DatasetType: "raw"` was already present and was left as is.
+- `GeneratedBy` was left absent, exactly as the source published it — nothing was added there.
+
+**Out of mechanical scope — left untouched**
+- The fNIRS modality is not validated against BIDS-fNIRS because the data is `.mat` rather than `.snirf`. Converting the payloads to `.snirf` would require parsing the lab's `.mat` layout and reconstructing optode geometry, which goes beyond a metadata-only cleanup.
+
+**Remaining warnings (1024) — left on purpose**
+- These are all "recommended but missing" fields plus a handful of warnings for recordings that have no events table. The recommended-but-missing list includes `GeneratedBy` on `dataset_description.json` and a long tail of equipment, cap, and filter fields that need information from the study, lab, or hardware that is not in the dataset. They were left blank rather than filled with guesses.
