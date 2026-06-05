@@ -1,0 +1,34 @@
+{
+  "onset": {
+    "LongName": "Event onset",
+    "Description": "Onset of the event, in seconds, measured from the start of the recording.",
+    "Units": "s"
+  },
+  "duration": {
+    "LongName": "Event duration",
+    "Description": "Duration of the event. The source `EEG.event` struct stamps a 1-sample duration on every trigger; that 1-sample value is not a meaningful duration and is recorded here as `n/a` to indicate an instantaneous trigger event.",
+    "Units": "s"
+  },
+  "sample": {
+    "LongName": "Sample",
+    "Description": "Sample index of the event in the recording's EEG signal (0-based, computed as `round(onset * sfreq)` with `sfreq = 500 Hz` as declared in `task-motorimagery_eeg.json`)."
+  },
+  "value": {
+    "LongName": "Event marker",
+    "Description": "Verbatim event label from the source dataset's EEG.event struct (the `.set` file's event table). The source dataset does not publish a code-to-meaning mapping for the per-trial markers; the README documents the trial structure (3 s fixation, 4 s visual cue, 3 s ready state, 5 s motor-imagery period; 40 trials per session; four MI tasks Reach/Grasp/Lift/Twist presented in random order) but does not state which `S` code corresponds to which phase or task.",
+    "Levels": {
+      "boundary":     "EEGLAB-internal data-discontinuity marker. Stamped automatically by EEGLAB at concatenation points; not a stimulus or response event. Appears once per recording, at sample 0.",
+      "S  1":         "Trigger code from the source EEG.event struct. Appears once per recording near the file start; not documented in the source dataset's README or sidecars.",
+      "S  2":         "Trigger code from the source EEG.event struct. Appears 40 times per recording (matching the 40 trials per session described in the README); not explicitly documented in the source dataset.",
+      "S  3":         "Trigger code from the source EEG.event struct. Appears 10 times per recording; not explicitly documented in the source dataset.",
+      "S  4":         "Trigger code from the source EEG.event struct. Appears 10 times per recording; not explicitly documented in the source dataset.",
+      "S  5":         "Trigger code from the source EEG.event struct. Appears 10 times per recording; not explicitly documented in the source dataset.",
+      "S  6":         "Trigger code from the source EEG.event struct. Appears 10 times per recording; not explicitly documented in the source dataset. (The four codes S 3 / S 4 / S 5 / S 6 each appearing 10 times per session matches the README's description of four MI tasks Reach / Grasp / Lift / Twist with 10 trials each, but the source does not publish which code maps to which task.)",
+      "S  7":         "Trigger code from the source EEG.event struct. Appears 40 times per recording; not explicitly documented in the source dataset.",
+      "S  8":         "Trigger code from the source EEG.event struct. Appears 40 times per recording; not explicitly documented in the source dataset.",
+      "S  9":         "Trigger code from the source EEG.event struct. Appears 40 times per recording; not explicitly documented in the source dataset.",
+      "S 10":         "Trigger code from the source EEG.event struct. Appears 40 times per recording; not explicitly documented in the source dataset.",
+      "condition 12": "Trigger code from the source EEG.event struct. Appears once per recording near the file end; not explicitly documented in the source dataset."
+    }
+  }
+}
