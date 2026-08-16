@@ -1,3 +1,6 @@
-/sub-*/fnirs/**
-/task_motorimagery_nirs.json
-/task_motorimagery_eeg.json.nemar/
+*/fnirs
+*/fnirs/
+*/fnirs/**
+task_motorimagery_nirs.json
+task_motorimagery_eeg.json
+.nemar/
