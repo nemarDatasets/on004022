@@ -2,6 +2,8 @@
   "version": "2.0",
   "pipeline_stage": "validated",
   "title": "Multimodal EEG and fNIRS Biosignal Acquisition during Motor Imagery Tasks in Patients with Orthopedic Impairment",
+  "description": "Raw multimodal recordings of 18-channel EEG and functional near-infrared spectroscopy (fNIRS) from seven participants with orthopedic impairment performing motor imagery tasks. Each participant completed three sessions of 40 trials, with four motor imagery tasks (reach, twist, lift, grasp) presented in random order. The dataset supports research on multimodal brain-computer interfaces for people with motor impairments.",
+  "methods_description": "Each trial began with a 3 s fixation cross, followed by a 4 s visual cue and 3 s of a gray ready screen to eliminate afterimages. Participants then performed the imagined movement for 5 s. Each of the three sessions comprised 40 trials with four motor imagery tasks in random order.",
   "license": "CC0",
   "dataset_type": "raw",
   "authors": {
@@ -12,6 +14,29 @@
     "Hakseung Kim": {},
     "Dong-Joo Kim": {}
   },
+  "keywords": [
+    {
+      "term": "EEG"
+    },
+    {
+      "term": "fNIRS"
+    },
+    {
+      "term": "motor imagery"
+    },
+    {
+      "term": "orthopedic impairment"
+    },
+    {
+      "term": "brain-computer interface"
+    },
+    {
+      "term": "Electroencephalography"
+    },
+    {
+      "term": "Spectroscopy, Near-Infrared"
+    }
+  ],
   "related_identifiers": [
     {
       "identifier": "10.18112/openneuro.ds004022.v1.0.0",
@@ -24,18 +49,18 @@
       "relation_type": "IsDescribedBy"
     },
     {
-      "identifier": "https://nemar.org/dataexplorer/detail?dataset_id=on004022",
+      "identifier": "https://nemar.org/dataset/on004022",
       "identifier_type": "URL",
       "relation_type": "IsDescribedBy"
     }
   ],
   "resource_type_general": "Dataset",
+  "resource_type_specific": "EEG Dataset",
   "modalities": [
     "eeg"
   ],
-  "resource_type_specific": "EEG Dataset",
   "sizes": [
-    "665.7 MB (64 files)"
+    "635 MB (64 files)"
   ],
   "formats": [
     ".fdt",
@@ -45,28 +70,6 @@
     ".set",
     ".tsv",
     ".yml"
-  ],
-  "description": "This dataset comprises simultaneous 18-channel EEG and functional near-infrared spectroscopy (fNIRS) recordings from 7 participants with orthopedic impairment during motor imagery tasks. Participants performed four different motor imagery conditions (reach, twist, lift, grasp) across three sessions with 40 trials each, following a standardized paradigm with visual cueing and fixation periods. The multimodal biosignal acquisition provides complementary hemodynamic and electrophysiological measures of motor imagery processing in a clinical population.",
-  "methods_description": "EEG and fNIRS data were acquired simultaneously during motor imagery tasks. Each trial consisted of a 3-second fixation cross, followed by a 4-second visual cue, a 3-second ready state with gray screen, and a 5-second motor imagery execution period. Four motor imagery tasks (reach, twist, lift, grasp) were presented in random order across 40 trials per session over three sessions.",
-  "keywords": [
-    {
-      "term": "EEG"
-    },
-    {
-      "term": "fNIRS"
-    },
-    {
-      "term": "motor imagery"
-    },
-    {
-      "term": "brain-computer interfaces"
-    },
-    {
-      "term": "orthopedic impairment"
-    },
-    {
-      "term": "neuroimaging"
-    }
   ],
   "source_hash": "82718dd30da5fff3e627021f515abe47585ee3ac270e56fc45206ea302b9e77d"
 }
